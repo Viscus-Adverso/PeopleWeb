@@ -44,11 +44,14 @@ public class Main {
                     }
                     List<Person> subPeople = allPeople.subList(offSetNum, 20 + offSetNum);
                     HashMap m = new HashMap();
+                    m.put("next", 20+offSetNum);
+                    m.put("previous", offSetNum-20);
                     m.put("h", subPeople);
                     return new ModelAndView(m, "home.html");
                 },
                 new MustacheTemplateEngine()
 
         );
+
     }
 }
