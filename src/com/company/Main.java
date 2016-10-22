@@ -1,8 +1,14 @@
 package com.company;
 
+import spark.ModelAndView;
+import spark.Spark;
+import spark.template.mustache.MustacheTemplateEngine;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -27,6 +33,22 @@ public class Main {
             Person p = new Person(id, firstName, lastName, email, country, ipAddress);
             allPeople.add(p);
         }
-        System.out.println(allPeople);
+
+        Spark.get(
+                "/",
+                (request, response) -> {
+                    String offSet = request.queryParams("offSet");
+                    int offSetNum = 0;
+                    if (offSet != null){
+                        offSetNum = Integer.valueOf(offSet);
+                    }
+                    List<Person> subPeople = allPeople.subList(offSetNum, 20 + offSetNum);
+                    HashMap m = new HashMap();
+                    m.put("h", subPeople);
+                    return new ModelAndView(m, "home.html");
+                },
+                new MustacheTemplateEngine()
+
+        );
     }
 }
