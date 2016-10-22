@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>PeopleWeb</title>
 </head>
 <body>
 {{#h}}
-{{firstName}} {{lastName}} <br>
+<a href="/person?id={{id}}">{{firstName}} {{lastName}}</a> <br>
 {{/h}}
+{{#shownext}}
 <a href="/?offSet={{next}}">Next</a>
+{{/shownext}}
+{{#showprevious}}
 <a href="/?offSet={{previous}}">Previous</a>
+{{/showprevious}}
+
 </body>
 </html>

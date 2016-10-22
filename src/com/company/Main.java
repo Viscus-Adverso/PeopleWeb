@@ -47,10 +47,27 @@ public class Main {
                     m.put("next", 20+offSetNum);
                     m.put("previous", offSetNum-20);
                     m.put("h", subPeople);
+                    m.put("shownext", allPeople.size()-offSetNum>20);
+                    m.put("showprevious", offSetNum!=0);
                     return new ModelAndView(m, "home.html");
                 },
                 new MustacheTemplateEngine()
 
+        );
+
+        Spark.get(
+                "/person",
+                (request, response) -> {
+                    String id = request.queryParams("id");
+                    int idNum = 0;
+                    if (id != null){
+                        idNum = Integer.valueOf(id);
+                    }
+                    Person p = allPeople.get(idNum-1);
+
+                    return new ModelAndView(p, "person.html");
+                },
+                new MustacheTemplateEngine()
         );
 
     }
